@@ -10,16 +10,8 @@
 </head>
 <body>
     <div class="container">
-        <h2>Pendaftaran Anggota</h2>
+        <h2>Pendaftaran</h2>
         <form method="post" action="konfirmasi.php">
-            <div class="form-group">
-                <label>Username</label>
-                <input class="form-control" type="text" name="username">
-            </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input class="form-control" type="password" name="password">
-            </div>
             <div class="form-group">
                 <label>Nama Depan</label>
                 <input class="form-control" type="text" name="namaDepan">

@@ -9,13 +9,26 @@
     
 </head>
 <body>
-    <?php     
-    if (isset($_POST['tombolSubmit'])) {
+    <?php   
+    $status = 2;  
+    if (isset($_POST['kodemk'])) {
         include_once "koneksi.php"; 
         $kodemk = $_POST['kodemk'];
         $namamk = $_POST['namamk'];
         $kategori = $_POST['kategori'];
-        $sks = $_POST['sks'];       
+        $sks = $_POST['sks']; 
+
+         //buat koneksi
+         $strsql = "INSERT INTO matakuliah (kodemk, namamk, kategori, sks) 
+         VALUES ('$kodemk','$namamk','$kategori','$sks')";
+         
+         $runSQL = mysqli_query($conn,$strsql);        
+         if ($runSQL) {
+             $status = 1; //sukses
+         }  
+         else {
+             $status = 0; //tidak sukses;
+         }       
     }            
     ?>
     <div class="container">
@@ -55,14 +68,33 @@
                     <!-- footer -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-info" data-dismiss="modal">Edit</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Submit</button>
+                        <button id="proses" type="button" class="btn btn-primary" data-dismiss="modal">Submit</button>
                     </div>
                 </div>
             </div>
         </div>
 
     <!-- ini end modal -->
-        <form method="post" action="registrasi_mk2.php">
+        <?php 
+            if ($status == 1) {
+        ?>    
+            <div class="alert alert-success alert-dismissible fade show">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                Data berhasil diinput ke dalam database.
+            </div>
+        <?php 
+            }
+            else if ($status == 0){
+        ?>
+            <div class="alert alert-danger alert-dismissible fade show">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                Data tidak berhasil diinput ke dalam database.
+            </div>
+        <?php 
+            }
+        
+        ?>
+        <form id="myform" method="post" action="registrasi_mk2.php">
             <div class="form-group">
                 <label>Kode Mata Kuliah</label>
                 <input id="kodemk" class="form-control" type="text" name="kodemk">
@@ -94,6 +126,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <script>
     $(document).ready(function() {
+        $('#proses').click(function(){
+            $('#myform').submit();
+        });
         $('#tombol').click(function(){
             //ambil data dari form
             const kodemk = $('#kodemk').val();
